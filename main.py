@@ -79,4 +79,6 @@ def final_value_after_operations(operations):
 
 
 operations = ["trouncy", "flouncy", "flouncy"]
-print(final_value_after_operations(operations))
+#print(final_value_after_operations(operations))
+
+print("There were: ", 3, " people at the park\n")
