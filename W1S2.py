@@ -148,3 +148,22 @@ left_sum[i] is the sum of elements to the left of the index i in the array nums.
 right_sum[i] is the sum of elements to the right of the index i in the array nums. If there is no such element, right_sum[i] = 0
 '''
 
+def left_right_difference(nums: list[int]) -> list[int]:
+    difference: list[int] = []
+    for i, num in enumerate(nums):
+        leftSum: int = 0
+        rightSum: int = 0
+        #use slice syntax to get left and right arrays
+        left = nums[:i]
+        right = nums[i+1:]
+        leftSum = sum(left) 
+        rightSum = sum(right)
+        difference.append(leftSum - rightSum)
+    return difference
+
+nums = [10, 4, 8, 3]
+#print(left_right_difference(nums))
+
+nums = [1]
+#print(left_right_difference(nums))
+

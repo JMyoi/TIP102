@@ -115,5 +115,31 @@ votes2 = ["Colbert", "Serenity", "Serenity", "Tranquility", "Colbert"]
 #print(get_winner(votes2))
 
 
+'''
+Ground control has sent a transmission containing important information. A complete transmission is one where every letter of the English alphabet appears at least once.
+
+Given a string transmission containing only lowercase English letters, return true if the transmission is complete, or false otherwise.
+'''
+"""
+use a set to store all letters
+Assuming that all inputs are all lowercase and english letters: 
+false conditions
+    if there is a repeat then return false
+    if by the end the set size is not 26 then return false
+true conditions
+    if by the end the size of the set is 26
+# """
+
+def check_if_complete_transmission(transmission: str) -> bool:
+    S:set = set()
+    for char in transmission: 
+        S.add(char)
+    print(f"end of loop, length of set is: {len(S)}")
+    return len(S) == 26
     
-            
+transmission1 = "thequickbrownfoxjumpsoverthelazydog"
+transmission2 = "spacetravel"
+
+#print(check_if_complete_transmission(transmission1))
+#print(check_if_complete_transmission(transmission2))
+    
