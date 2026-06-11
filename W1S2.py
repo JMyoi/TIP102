@@ -104,13 +104,47 @@ def reverse_vowels(s: str) -> str:
     return ''.join(chars)
     
 s = "robin"
-print(reverse_vowels(s))
+#print(reverse_vowels(s))
 
 s = "BATgirl"
-print(reverse_vowels(s))
+#print(reverse_vowels(s))
 
 s = "batman"
-print(reverse_vowels(s))
+#print(reverse_vowels(s))
+
+"""
+Batman is going on a scouting trip, surveying an area where he thinks Harley Quinn might commit her next crime spree. The area has many hills with different heights and Batman wants to find the tallest one to get the best vantage point. His scout trip consists of n + 1 points at different altitudes. Batman starts his trip at point 0 with altitude 0.
+
+Write a function highest_altitude() that accepts an integer array gain of length n where gain[i] is the net gain in altitude between points i​​​​​​ and i + 1 for all (0 <= i < n). Return the highest altitude of a point.
+"""
+
+#prefix sum problem, running total
+def highest_altitude(gain: list[int]) -> int:
+    # go through the gain list and calculate the altitude at each step, keeping track of the hightest altitude found, 
+    highest: int = 0
+    altitude: int = 0
+    for level in gain:
+        altitude += level
+        if altitude > highest:
+            highest = altitude
+    return highest
+
+gain = [-5, 1, 5, 0, -7]
+#print(highest_altitude(gain))
+
+gain = [-4, -3, -2, -1, 4, 3, 2]
+#print(highest_altitude(gain))
 
 
+# Left and Right Sum Differences
+'''
+Given a 0-indexed integer array nums, write a function left_right_difference that returns a 0-indexed integer array answer where:
+
+len(answer) == len(nums)
+answer[i] = left_sum[i] - right_sum[i]
+Where:
+
+left_sum[i] is the sum of elements to the left of the index i in the array nums. If there is no such element, left_sum[i] = 0
+right_sum[i] is the sum of elements to the right of the index i in the array nums. If there is no such element, right_sum[i] = 0
+'''
 
