@@ -167,3 +167,23 @@ nums = [10, 4, 8, 3]
 nums = [1]
 #print(left_right_difference(nums))
 
+# Common Cause
+
+def common_elements(lst1: list[str], lst2: list[str]) -> list[str]:
+    outList: list[str] = []
+    for s1 in lst1:
+        for s2 in lst2:
+            if s1 == s2: 
+                outList.append(s1)
+
+    return outList
+
+lst1 = ["super strength", "super speed", "x-ray vision"]
+lst2 = ["super speed", "time travel", "dimensional travel"]
+print(common_elements(lst1, lst2))
+
+lst1 = ["super strength", "super speed", "x-ray vision"]
+lst2 = ["martial arts", "stealth", "master detective"]
+print(common_elements(lst1, lst2))
+
+
