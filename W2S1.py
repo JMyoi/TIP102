@@ -142,4 +142,42 @@ transmission2 = "spacetravel"
 
 #print(check_if_complete_transmission(transmission1))
 #print(check_if_complete_transmission(transmission2))
-    
+
+
+# Signal Pairs
+
+def max_number_of_string_pairs(signals: list[str]) -> int:
+    signalFreq: dict[str, int] = {}
+    totalPairs: int = 0
+    for s in signals:
+        revStr: str = s[::-1]
+        print(f"reversed string: {revStr}")
+        if revStr in signalFreq:
+            signalFreq[revStr]+=1
+            totalPairs+=1
+        else:
+            signalFreq[s] = 1
+    return totalPairs
+
+signals1 = ["cd", "ac", "dc", "ca", "zz"]
+signals2 = ["ab", "ba", "cc"]
+signals3 = ["aa", "ab"]
+
+# print(max_number_of_string_pairs(signals1))
+# print(max_number_of_string_pairs(signals2))
+# print(max_number_of_string_pairs(signals3))
+
+
+# Q8 Find Differenc eof Two signal arrays
+
+def find_difference(signals1: list[int], signals2: list[int]) -> tuple[list[int], list[int]]:
+    Set1: set[int] = set(signals1)
+    Set2: set[int] = set(signals2)
+    return Set1 - Set2, Set2 - Set1
+
+
+
+signals1_example1 = [1, 2, 3]
+signals2_example1 = [2, 4, 6]
+
+print(find_difference(signals1_example1, signals2_example1)) 
