@@ -5,6 +5,140 @@
 #include <algorithm>
 using namespace std;
 
+int max_number_of_string_pairs(vector<string> signals);
+
+vector<vector<int>> find_difference(vector<int> signals1, vector<int> signals2);
+
+int* find_common_signals(vector<int> signals1, vector<int> signals2);
+
+int* find_common_signals_usingSet(vector<int> signals1, vector<int> signals2);
+
+vector<int> frequency_sort(vector<int> signals);
+
+int main(){
+    // Q7 Signal pairs
+    // vector<string> signals1 = {"cd", "ac", "dc", "ca", "zz"};
+    // int ans = max_number_of_string_pairs(signals1);
+    // cout<<"Answer: "<<ans<<endl;
+
+    /*
+    Q8
+    vector<int> S1 = {1,2,3};
+    vector<int> S2 = {2,4,6};
+    vector<vector<int>> ans = find_difference(S1, S2);
+    for(int i = 0; i < ans.size(); ++i){
+        cout<<"[";
+        for(int j = 0; j < ans.at(i).size(); ++j){
+            cout<<ans.at(i).at(j);
+            if(j != ans.at(i).size()-1)
+                cout<<",";
+            else
+                continue;
+        }
+        cout<<"]";
+    }
+    */
+   /*
+   Q9 and 10
+   vector<int> signals1 = {4,3,2,4,1};
+   vector<int> signals2 = {2,2,5,2,3,6};
+   int* arr = find_common_signals_usingSet(signals1, signals2);
+   cout<< arr[0]<<", "<<arr[1]<<endl;
+   delete[] arr;
+   */
+  /*
+    Q11
+  */
+
+
+
+
+    return 0;
+}
+
+
+/*
+pairs[i] // access value, but will insert 0 if not there?
+pairs.at(k) // safe? returns iteratior or .end() if not found?
+pairs.count(k)// 1 or 0
+
+*/
+
+vector<int> frequency_sort(vector<int> signals){
+    unordered_map<int, int> freq;
+    for(int s: signals){
+        if(freq.count(s))
+            freq[s]++;
+        else
+            freq[s] = 1;
+    }
+
+    //return a sorted array based on frequency in increasing order of frequency, if frequency are same, sort in decreasing order by key
+    vector<int> sorted(signals.size());
+    
+    for(auto it = freq.begin(); it != freq.end(); it++){
+        it->first;
+        it->second;
+        //implement via insertion sort 
+    }
+
+}
+
+
+int* find_common_signals(vector<int> signals1, vector<int> signals2){
+    int answer1 = 0;
+    int answer2 = 0;
+    for(int n1: signals1){
+        for(int n2: signals2){
+            if (n1 == n2){
+                answer1++;
+                break;
+            }
+        }
+    }
+    for(int i = 0; i < signals2.size(); ++i){
+        for(int j = 0; j < signals1.size(); ++j){
+            if(signals2.at(i) == signals1.at(j)){
+                answer2++;
+                break;
+            }
+        }
+    }
+    int* ans = new int[]{answer1, answer2};
+    return ans;
+
+}
+
+int* find_common_signals_usingSet(vector<int> signals1, vector<int> signals2){
+    unordered_set<int> Seen1;
+    unordered_set<int> Seen2;
+    int answer1 = 0;
+    int answer2 = 0;
+
+    for(int n2: signals2){
+        Seen2.insert(n2);
+    }
+    for(int n1: signals1){
+        if(Seen2.count(n1)){
+            answer1++;
+        }
+    }
+
+    for(int n1: signals1){
+        Seen1.insert(n1);
+    }
+    for(int n2: signals2){
+        if(Seen1.count(n2)){
+            answer2++;
+        }
+    }
+
+    int* ans = new int[]{answer1, answer2};
+    return ans;
+
+
+}
+
 int max_number_of_string_pairs(vector<string> signals){
     unordered_map<string, int> pairs;
     int totalPairs = 0;
@@ -49,39 +183,3 @@ vector<vector<int>> find_difference(vector<int> signals1, vector<int> signals2){
     ans.push_back(diff2);
     return ans;
 }
-
-
-int main(){
-    // Q7 Signal pairs
-    // vector<string> signals1 = {"cd", "ac", "dc", "ca", "zz"};
-    // int ans = max_number_of_string_pairs(signals1);
-    // cout<<"Answer: "<<ans<<endl;
-
-    /*
-    Q8
-    vector<int> S1 = {1,2,3};
-    vector<int> S2 = {2,4,6};
-    vector<vector<int>> ans = find_difference(S1, S2);
-    for(int i = 0; i < ans.size(); ++i){
-        cout<<"[";
-        for(int j = 0; j < ans.at(i).size(); ++j){
-            cout<<ans.at(i).at(j);
-            if(j != ans.at(i).size()-1)
-                cout<<",";
-            else
-                continue;
-        }
-        cout<<"]";
-    }
-    */
-
-    return 0;
-}
-
-
-/*
-pairs[i] // access value, but will insert 0 if not there?
-pairs.at(k) // safe? returns iteratior or .end() if not found?
-pairs.count(k)// 1 or 0
-
-*/

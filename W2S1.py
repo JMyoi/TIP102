@@ -180,4 +180,157 @@ def find_difference(signals1: list[int], signals2: list[int]) -> tuple[list[int]
 signals1_example1 = [1, 2, 3]
 signals2_example1 = [2, 4, 6]
 
-print(find_difference(signals1_example1, signals2_example1)) 
+#print(find_difference(signals1_example1, signals2_example1)) 
+
+
+"""
+Two space probes have collected signals represented by integer arrays signals1 and signals2 of sizes n and m, respectively. Calculate the following values:
+
+answer1: the number of indices i such that signals1[i] exists in signals2.
+answer2: the number of indices j such that signals2[j] exists in signals1.
+Return [answer1, answer2].
+
+"""
+
+def find_common_signals(signals1: list[int], signals2: list[int]) -> tuple[int, int]:
+    answer1 = 0
+    answer2 = 0
+    for i in signals1:
+        if i in signals2:
+            answer1+=1
+    for i in signals2:
+        if i in signals1:
+            answer2+=1
+    return answer1, answer2
+
+def find_common_signals_usingSet(signals1: list[int], signals2: list[int]) -> tuple[int, int]:
+    Set1 = set(signals1)
+    Set2 = set(signals2)
+    answer1 = 0
+    answer2 = 0
+    for i in signals1:
+        if i in Set2:
+            answer1+=1
+    for i in signals2:
+        if i in Set1:
+            answer2+=1
+    return answer1, answer2
+
+def find_common_signals_usingSet(signals1: list[int], signals2: list[int]) -> tuple[int, int]:
+    dict1 = {}
+    dict2 = {}
+    answer1 = 0
+    answer2 = 0
+    for i in signals1:
+        if i in dict1 and i in signals2:
+            dict1[i]+=1
+        elif i in signals2:
+            dict1[i] = 1
+        else:
+            dict1[i] = 0
+    for i in signals2:
+        if i in dict2 and i in signals1:
+            dict2[i]+=1
+        elif i in signals1:
+            dict2[i] = 1
+        else:
+            dict2[i] = 0
+    for v in dict1.values():
+        answer1 +=v
+    for v in dict2.values():
+        answer2 +=v
+    return answer1, answer2
+
+
+signals1_example1 = [2, 3, 2]
+signals2_example1 = [1, 2]
+#print(find_common_signals_usingSet(signals1_example1, signals2_example1))
+
+signals1_example2 = [4, 3, 2, 3, 1]
+signals2_example2 = [2, 2, 5, 2, 3, 6]
+#print(find_common_signals_usingSet(signals1_example2, signals2_example2))
+
+signals1_example3 = [3, 4, 2, 3]
+signals2_example3 = [1, 5]
+#print(find_common_signals_usingSet(signals1_example3, signals2_example3))
+
+
+"""
+Ground control needs to analyze the frequency of signal data received from different probes. Given an array of integers signals, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order. Return the sorted array.
+
+Below is a buggy or incomplete version of the solution. Identify and fix the bugs in the code. Then, perform a code review and suggest improvements.
+"""
+
+def frequency_sort(signals):
+    freq = {}
+    for signal in signals:
+        if signal in freq:
+            freq[signal] += 1
+        else:
+            freq[signal] = 1
+
+    sorted_signals = sorted(signals, key=lambda x: (freq[x], -x))
+
+    return sorted_signals
+
+signals1 = [1, 1, 2, 2, 2, 3]
+signals2 = [2, 3, 1, 3, 2]
+signals3 = [-1, 1, -6, 4, 5, -6, 1, 4, 1]
+
+# print(frequency_sort(signals1)) 
+# print(frequency_sort(signals2)) 
+# print(frequency_sort(signals3))
+
+
+"""
+You are given an array paths, where paths[i] = [hubA, hubB] means there exists a direct communication path going from hubA to hubB. Return the final communication hub, that is, the hub without any outgoing path to another hub.
+
+It is guaranteed that the paths form a line without any loops, therefore, there will be exactly one final communication hub.
+
+"""
+# true meaning that the hub points to another 
+#false meaning that that hub does not point to another meaning it's final destination.
+# dict = {
+#     "Earth": True,
+#     "Mars": True, 
+#     "Titan": True, 
+#     "Europa": False
+# }
+
+def find_final_hub(paths: list[list[str]]) -> str:
+    hubsPoint: dict[str, bool] = {} 
+    for path in paths:
+        origin: str = path[0]
+        dest: str = path[1]
+        hubsPoint[origin] = True
+        if dest in hubsPoint:
+            continue
+        else:
+            hubsPoint[dest] = False
+    print(f"hubsPoint: {hubsPoint}")
+    for hub, point in hubsPoint.items():
+        if point == False:
+            return hub
+
+paths1 = [["Earth", "Mars"], ["Mars", "Titan"], ["Titan", "Europa"]]
+paths2 = [["Alpha", "Beta"], ["Gamma", "Alpha"], ["Beta", "Delta"]]
+paths3 = [["StationA", "StationZ"]]
+
+print(find_final_hub(paths1)) 
+print(find_final_hub(paths2)) 
+print(find_final_hub(paths3))
+
+"""
+simpler soluiton using set, 
+Simpler set-based approach:
+
+The final hub is the one that appears as a destination but never as an origin. Sets make this a one-liner:
+
+
+def find_final_hub(paths: list[list[str]]) -> str:
+    origins = {path[0] for path in paths}
+    dests = {path[1] for path in paths}
+    return (dests - origins).pop()
+This is O(n) and arguably clearer because it directly expresses the problem: "what's in destinations but not origins?"
+"""
+
