@@ -180,10 +180,124 @@ def common_elements(lst1: list[str], lst2: list[str]) -> list[str]:
 
 lst1 = ["super strength", "super speed", "x-ray vision"]
 lst2 = ["super speed", "time travel", "dimensional travel"]
-print(common_elements(lst1, lst2))
+#print(common_elements(lst1, lst2))
 
 lst1 = ["super strength", "super speed", "x-ray vision"]
 lst2 = ["martial arts", "stealth", "master detective"]
-print(common_elements(lst1, lst2))
+#print(common_elements(lst1, lst2))
 
+"""
+Metropolis has a population n, with each citizen assigned an integer id from 1 to n. There's a rumor that Superman is an ordinary citizen among this group.
+
+If Superman is an ordinary citizen, then:
+
+Superman trusts nobody.
+Everybody (except for Superman) trusts Superman.
+There is exactly one citizen that satisfies properties 1 and 2.
+Write a function expose_superman() that accepts a 2D array trust where trust[i] = [ai, bi] representing that the person labeled ai trusts the person labeled bi. If a trust relationship does not exist in trust array, then such a trust relationship does not exist.
+
+Return the label of Superman if he is hiding amongst the population and can be identified, or return -1 otherwise.
+
+"""
+
+"""
+ keep a population dict for each person has an id and a bool value for if they are or are not superman and a trust cout of number of people that trusted him
+#They are considered not superman if they trust somebody
+#go thorugh the trust array to keep track of people and who they trust, 
+#if they trust someone then they are not superman and we can put false, 
+if the person they trust is not in the population map then add them there and set to potentially true and also trust count to 1
+if they are there then incriment the trust count
+
+
+#sample population map
+population = {
+    1: { "Superman": False, "trustCount": 1},
+    2: {"Superman":False, "trustCount":0},
+    3: {"Superman":False, "trustCount":1}
+}
+
+at the end go through the population map and look for someone who has superman value to true and also trust count of n-1, because everyone trusts superman exept for superman
+"""
+
+def expose_superman(trust, n):
+    population = {}
+    for t in trust:
+        truster:int = t[0]
+        trustee:int = t[1]
+        if truster not in population:
+            population[truster] = {"Superman": False, "trustCount": 0}
+            if trustee in population:
+                population[trustee]["trustCount"]+=1
+            elif trustee not in population:
+                population[trustee] = {"Superman": True, "trustCount": 1}
+        elif truster in population:
+            population[truster]["Superman"] = False
+            if trustee in population:
+                population[trustee]["trustCount"]+=1
+            elif trustee not in population:
+                population[trustee] = {"Superman": True, "trustCount": 1}
+    print(f"Population Map = {population}")
+
+    for id, stat in population.items():
+        if stat.get("Superman") == True and stat.get("trustCount") == n-1:
+            return id
+        
+    return -1
+
+n = 2
+trust = [[1, 2]]
+print(expose_superman(trust, n))
+
+n = 3
+trust = [[1, 3], [2, 3]]
+print(expose_superman(trust, n))
+
+n = 3
+trust = [[1, 3], [2, 3], [3, 1]]
+print(expose_superman(trust, n))
+
+# Superman is person 4 out of 4
+n = 4
+trust = [[1,4],[2,4],[3,4]]
+print(expose_superman(trust, n))  # Expected: 4
+
+# Everyone trusts each other — no Superman
+n = 3
+trust = [[1,2],[2,3],[3,1]]
+print(expose_superman(trust, n))  # Expected: -1
+
+# Nobody trusts anyone — can't confirm Superman
+n = 3
+trust = []
+print(expose_superman(trust, n))  # Expected: -1
+
+# Superman (5) is trusted by all in a larger group
+n = 5
+trust = [[1,5],[2,5],[3,5],[4,5]]
+print(expose_superman(trust, n))  # Expected: 5
+
+# Candidate (4) trusted by all, but also trusts someone — disqualified
+n = 4
+trust = [[1,4],[2,4],[3,4],[4,1]]
+print(expose_superman(trust, n))  # Expected: -1
+
+# Person 1 is Superman — trusters added before trustee
+n = 3
+trust = [[2,1],[3,1]]
+print(expose_superman(trust, n))  # Expected: 1
+
+# Two people each trusted by n-1, but both trust someone
+n = 4
+trust = [[1,2],[3,2],[4,2],[1,3],[2,3],[4,3]]
+print(expose_superman(trust, n))  # Expected: -1
+
+# n=1 edge case
+n = 1
+trust = []
+print(expose_superman(trust, n))  # Expected: 1 (your code returns -1 — bug)
+    
+
+
+
+    
 
