@@ -22,7 +22,7 @@ species_list = [
     }
 ]
 
-print(most_endangered(species_list))
+#print(most_endangered(species_list))
 
 #Week 2 TIP question on roman to integer
 def roman_to_integer(s):
@@ -56,3 +56,81 @@ def roman_to_integer(s):
             sum += romanNumerals[s[i]]
             i -= 1
     return sum
+
+
+#
+"""
+
+Keep a frequency map of endangered species
+endangeredFreq = {
+    'a': 0,
+    'A': 0
+}
+iterate through the obderved_species and check if that species exists in endangered, if it does incriment and incriment the endangered total count.
+O(n + m)
+"""
+def count_endangered_species(endangered_species: str, observed_species: str) -> int:
+    endangeredFreq: dict[str, int] = {}
+    totalEndangered = 0
+    for endangered in endangered_species:
+        endangeredFreq[endangered] = 0
+    for species in observed_species:
+        if species in endangeredFreq:
+            endangeredFreq[species] +=1
+            totalEndangered+=1
+    return totalEndangered
+    
+
+
+endangered_species1 = "aA"
+observed_species1 = "aAAbbbb"
+
+endangered_species2 = "z"
+observed_species2 = "ZZ"
+
+#print(count_endangered_species(endangered_species1, observed_species1)) 
+#print(count_endangered_species(endangered_species2, observed_species2))  
+
+
+"""
+    brute force, for every character in obervaions, get the index whtere tha character is found in the layout, 
+    keep that number, continue until we get all index, 
+    add them together at the end and return, 
+    P(n^2)
+
+    make a dict of station layout iwth index, letter, to index
+    {
+        'p' = 0,
+        'q' = 1
+        ...
+    }
+    for every char in observation, find it's mapping index and compute the absolute difference of how we got there, | i - j |.
+    we take the absolute value because it accounts for  going backwards and foward in index. 
+        prevIndex = 4 - current = 2 totalDistance = 2, | 4 - 2 | = 2
+        prev index = 5 - current = 8 total distance = 3, |5 - 8| = 3
+
+
+"""
+def navigate_research_station(station_layout: str, observations: str) -> int:
+    stationIndexMap: dict[str, int] = {}
+    runningSum: int = 0
+    for i, station in enumerate(station_layout):
+        stationIndexMap[station] = i
+    print(f"Mapping: {stationIndexMap}")
+    prevIndex = 0;
+    for char in observations:
+        currIndex = stationIndexMap.get(char)
+        runningSum += abs(prevIndex - currIndex)
+        prevIndex = currIndex
+    return runningSum
+
+
+
+station_layout1 = "pqrstuvwxyzabcdefghijklmno"
+observations1 = "wildlife"
+
+station_layout2 = "abcdefghijklmnopqrstuvwxyz"
+observations2 = "cba"
+
+print(navigate_research_station(station_layout1, observations1))  
+print(navigate_research_station(station_layout2, observations2))
