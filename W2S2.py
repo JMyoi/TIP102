@@ -132,5 +132,51 @@ observations1 = "wildlife"
 station_layout2 = "abcdefghijklmnopqrstuvwxyz"
 observations2 = "cba"
 
-print(navigate_research_station(station_layout1, observations1))  
-print(navigate_research_station(station_layout2, observations2))
+#print(navigate_research_station(station_layout1, observations1))  
+#print(navigate_research_station(station_layout2, observations2))
+
+
+"""
+
+In your work with a wildlife conservation database, you have two lists: observed_species and priority_species. The elements of priority_species are distinct, and all elements in priority_species are also in observed_species.
+
+Write a function prioritize_observations() that sorts the elements of observed_species such that the relative ordering of items in observed_species matches that of priority_species. Species that do not appear in priority_species should be placed at the end of observed_species in ascending order.
+make a map of species and priority
+{
+    "cardinal": 1
+}
+then for every observed animal, if they are in priority list, then keep a new has table called frequendcy of the priority animal and the count of them observed,
+if it is not a priority species then add it to a new array and at the end we will sort via alpahbetic order, 
+turn the frequency inot an array.
+then combine the two arrays into extend
+"""
+
+def prioritize_observations(observed_species, priority_species):
+    priorityFreq = {}
+
+    for species in priority_species:
+        priorityFreq[species] = 0
+    nonPriority = []
+
+    for species in observed_species:
+        if species in priorityFreq:
+            priorityFreq[species] +=1
+        else:
+            nonPriority.append(species)
+    
+    nonPriority.sort()
+    SortedSpecies = []
+    for species in priority_species:
+        SortedSpecies.extend([species] * priorityFreq[species])
+    SortedSpecies.extend(nonPriority)
+
+    return SortedSpecies
+
+observed_species1 = ["🐯", "🦁", "🦌", "🦁", "🐯", "🐘", "🐍", "🦑", "🐻", "🐯", "🐼"]
+priority_species1 = ["🐯", "🦌", "🐘", "🦁"]  
+
+observed_species2 = ["bluejay", "sparrow", "cardinal", "robin", "crow"]
+priority_species2 = ["cardinal", "sparrow", "bluejay"]
+
+print(prioritize_observations(observed_species1, priority_species1))
+print(prioritize_observations(observed_species2, priority_species2)) 
