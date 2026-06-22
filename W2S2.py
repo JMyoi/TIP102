@@ -178,5 +178,30 @@ priority_species1 = ["🐯", "🦌", "🐘", "🦁"]
 observed_species2 = ["bluejay", "sparrow", "cardinal", "robin", "crow"]
 priority_species2 = ["cardinal", "sparrow", "bluejay"]
 
-print(prioritize_observations(observed_species1, priority_species1))
-print(prioritize_observations(observed_species2, priority_species2)) 
+#print(prioritize_observations(observed_species1, priority_species1))
+#print(prioritize_observations(observed_species2, priority_species2)) 
+
+"""
+problem 5
+find amx and min of array, remove them, avereage them and push to distinct average
+"""
+
+def distinct_averages(species_populations) -> int:
+    distinctAverage: set[float] = set()
+    while species_populations:
+        high: float = max(species_populations)
+        low: float = min(species_populations)
+        avg = (high + low) / 2
+        distinctAverage.add(avg)
+        species_populations.remove(high)
+        species_populations.remove(low)
+    return len(distinctAverage)
+
+species_populations1 = [4,1,4,0,3,5]
+species_populations2 = [1,100]
+
+print(distinct_averages(species_populations1))
+print(distinct_averages(species_populations2)) 
+
+
+    
