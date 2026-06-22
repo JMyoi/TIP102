@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def is_valid_post_format(posts):
   stack = []
   top = ""
@@ -85,8 +88,48 @@ def engagement_boost(engagements):
         right -= 1
         
     return sorted(squared)
-print(engagement_boost([-4, -1, 0, 3, 10]))
-print(engagement_boost([-7, -3, 2, 3, 11]))
+#print(engagement_boost([-4, -1, 0, 3, 10]))
+#print(engagement_boost([-7, -3, 2, 3, 11]))
             
 
 #Nice job guys
+
+
+"""
+There are n users in a queue waiting to stream their favorite movies, where the 0th user is at the front of the queue and the (n - 1)th user is at the back of the queue.
+
+You are given a 0-indexed integer array movies of length n where the number of movies that the ith user would like to stream is movies[i].
+
+Each user takes exactly 1 second to stream a movie. A user can only stream 1 movie at a time and has to go back to the end of the queue (which happens instantaneously) in order to stream more movies. If a user does not have any movies left to stream, they will leave the queue.
+
+Return the time taken for the user at position k (0-indexed) to finish streaming all their movies.
+
+Initialize an empty queue.
+Iterate over the movies list and append a tuple (i, movies[i]) to the queue where i is the user's index, and movies[i] is the number of movies they want to stream.
+While there are still users in the queue:
+Process each user by removing them from the front of the queue and icnremnting time by 1 for each movie streamed.
+If the user is k and has just streamed their last movie, return the current time.
+If the user still has movies left to stream, put them back at the end of the queue with one less movie.
+
+"""
+
+def time_required_to_stream(movies, k):
+    moviesQueue: deque[tuple[int, int]] = deque()
+    for i, movie in enumerate(movies):
+        moviesQueue.append((i, movie))
+    timeCount = 0
+    while(moviesQueue):
+        movie = moviesQueue.popleft()
+        #decrement time of movie
+        tempMovie = list(movie)
+        tempMovie[1] -= 1
+        movie = tuple(tempMovie)
+        timeCount += 1
+        if movie[1] != 0:
+            moviesQueue.append(movie)
+        elif movie[0] == k and movie[1] == 0:
+            return timeCount
+    
+
+print(time_required_to_stream([2, 3, 2], 2)) 
+print(time_required_to_stream([5, 1, 1, 1], 0)) 
