@@ -131,5 +131,53 @@ def time_required_to_stream(movies, k):
             return timeCount
     
 
-print(time_required_to_stream([2, 3, 2], 2)) 
-print(time_required_to_stream([5, 1, 1, 1], 0)) 
+#print(time_required_to_stream([2, 3, 2], 2)) 
+#print(time_required_to_stream([5, 1, 1, 1], 0)) 
+
+def reverse_watchlist(watchlist):
+    left = 0
+    right = len(watchlist) - 1
+    while( left < right):
+        temp: str = watchlist[left]
+        watchlist[left] = watchlist[right]
+        watchlist[right] = temp
+        left+=1
+        right-=1
+    return watchlist
+
+
+watchlist = ["Breaking Bad", "Stranger Things", "The Crown", "The Witcher"]
+
+#print(reverse_watchlist(watchlist))
+
+def remove_duplicate_shows(schedule):
+    stack: list[str] = []
+    for s in schedule:
+        if not stack:
+            stack.append(s)
+        elif stack[-1] == s:
+            stack.pop()
+        else:
+            stack.append(s)
+    result: str = ''.join(list(stack))
+    return result
+            
+
+#print(remove_duplicate_shows("abbaca")) 
+#print(remove_duplicate_shows("azxxzy")) 
+
+
+def minimum_average_view_count(view_counts):
+    averageViews = []
+    for i in range(len(view_counts) // 2):
+        smallest = min(view_counts)
+        view_counts.remove(smallest)
+        largest = max(view_counts)
+        view_counts.remove(largest)
+        avg = (smallest + largest) / 2
+        averageViews.append(avg)
+    return min(averageViews)
+
+print(minimum_average_view_count([7, 8, 3, 4, 15, 13, 4, 1])) 
+print(minimum_average_view_count([1, 9, 8, 3, 10, 5])) 
+print(minimum_average_view_count([1, 2, 3, 7, 8, 9]))
