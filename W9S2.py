@@ -199,8 +199,8 @@ chocolate_box1 = build_tree(sweetness_levels1)
 sweetness_levels2 = [1, 2, 3, 4, 5, None, 6]
 chocolate_box2 = build_tree(sweetness_levels2)
 
-print(sweet_difference(chocolate_box1))  
-print(sweet_difference(chocolate_box2))  
+#print(sweet_difference(chocolate_box1))  
+#print(sweet_difference(chocolate_box2))  
 
 
 
@@ -214,20 +214,57 @@ have a helper funciton
     
 """
 def can_rearrange_orders(order1, order2):
-    #null smore smore null ##edge case
-    # bfs on both trees.
     
-    #cheks if node 1's children can be swapped to be node2's children
-    def CanSwap(node1, node2):
-        if node1.left.val == node2.right.val and node1.right.val == node2.left.val:
+    # bfs on both trees.
+    queue = deque([(order1,order2)])
+   
+    while queue:
+        levelsize = len(queue)
+
+        
+        for _ in range(levelsize):
+            node1, node2 = queue.popleft()
+            print(node1.val, "|" ,node2.val)
+        
+            if not node1 or not node2: 
+                if node1 != node2:
+                    return False ##mismatch
+                continue
+
+            if CanSwap(node1,node2):
+                temp = node1.right
+                node1.right = node1.left
+                node1.left = temp
+            else:
+                return False
+                
+            #if node1.left and node2.left:
+            queue.append((node1.left,node2.left))
+
+            #if node2.right:
+            queue.append((node1.right,node2.right))
+
+    
+    #cheks if node1's children can be swapped to be node2's children
+def CanSwap(node1, node2):
+
+    if not node1.left or not node1.right or not node2.left or not node2.right:
+
+        if node1.left == None and node2.right == None and node1.right.val == node2.left.val:
             return True
-        return False
+        elif node1.right == None and node2.left == None and node1.left.val == node2.right.val:
+            return True
+        elif 
+    #null smore      smore null ##edge case
+    ## Null at the access point: NoneType' object has no attribute 'val'  
+
+    
+    if node1.left.val == node2.right.val and node1.right.val == node2.left.val:
+        return True
+    return False
 
 
-    pass
-
-
-
+    
 
 # Using build_tree() function included at top of page
 flavors1 = ["Red Velvet", "Vanilla", "Lemon", "Ube", "Almond", "Chai", "Carrot", 
@@ -236,5 +273,5 @@ flavors2 = ["Red Velvet", "Lemon", "Vanilla", "Carrot", "Chai", "Almond", "Ube",
 order1 = build_tree(flavors1)
 order2 = build_tree(flavors2)
 
-can_rearrange_orders(order1, order2)
+print(can_rearrange_orders(order1, order2))
 
