@@ -40,3 +40,26 @@ print(infix_to_postfix("( 3 + 4 ) * 2".split()), "expected: ['3', '4', '+', '2',
 print(infix_to_postfix("2 * ( 3 + 4 ) - 5".split()), "expected: ['2', '3', '4', '+', '*', '5', '-']")
 print(infix_to_postfix("( ( 1 + 2 ) * ( 3 - 4 ) ) / 5".split()), "expected: ['1', '2', '+', '3', '4', '-', '*', '5', '/']")
 print(infix_to_postfix("12 + 34 * 5".split()), "expected: ['12', '34', '5', '*', '+']")
+
+
+# evaluate reverse polish notation / postfix evaluation
+
+def postfix_eval(token: list[str]) -> int:
+
+    stack = []
+    for t in token:
+        if t in "/*-+":
+            right = stack.pop()
+            left = stack.pop()
+            if t == '/': stack.append(int(left / right)) #truncate towards 0
+            elif t == '*': stack.append(left * right)
+            elif t == '-': stack.append(left - right)
+            elif t == '+': stack.append(left + right)
+        else:
+            stack.append(int(t))
+    return stack.pop()
+
+print(postfix_eval(infix_to_postfix("5".split())), "expected: ['5']")
+print(postfix_eval(infix_to_postfix("1 + 2".split())), "expected: ['1', '2', '+']")
+print(postfix_eval(infix_to_postfix("3 + 4 * 2".split())), "expected: ['3', '4', '2', '*', '+']")
+print(postfix_eval(infix_to_postfix("3 * 4 + 2".split())), "expected: ['3', '4', '*', '2', '+']")
