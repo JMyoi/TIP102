@@ -23,6 +23,7 @@ vector<int> leftRightDifference(vector<int> nums){
     return Difference;
 }
 
+
 vector<string> common_elements(vector<string> lst1, vector<string> lst2){
     vector<string> Output;
     for(int i = 0; i < lst1.size(); ++i){
@@ -34,9 +35,6 @@ vector<string> common_elements(vector<string> lst1, vector<string> lst2){
     }
     return Output;
 }
-
-
-
 
 int main(){
     /*
