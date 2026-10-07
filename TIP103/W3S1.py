@@ -1,3 +1,47 @@
+
+
+
+"""
+recurse down every layer, sandwitch[1]
+if that layers is the last lyer meaning that there are no more layers after it
+then return base case 1
+as we come back up we add 1
+"""
+def count_layers(sandwich):
+    if len(sandwich) == 1:
+        return 1
+    return count_layers(sandwich[1]) + 1
+     
+
+sandwich1 = ["bread", ["lettuce", ["tomato", ["bread"]]]]
+sandwich2 = ["bread", ["cheese", ["ham", ["mustard", ["bread"]]]]]
+
+print(count_layers(sandwich1))
+print(count_layers(sandwich2))
+
+
+def reverse_orders(orders):
+    reversed = []
+    orders = orders.split(" ")
+    print(orders)
+    reversed = recReverseorder(orders, reversed)
+    reversed = " ".join(reversed)
+    return reversed
+
+def recReverseorder(orders, revOrders):
+    print(f"orders: {orders}, reverse orders: {revOrders}")
+    if len(orders) == 1:
+        revOrders.append(orders[0])
+        return revOrders
+    recReverseorder(orders[1:], revOrders)
+    print(f"orders: {orders}, reverse orders: {revOrders}")
+    revOrders.append(orders[0])
+    return revOrders
+
+
+print(reverse_orders("Bagel Sandwich Coffee"))
+
+
 #infix to postfix
 
 def infix_to_postfix(tokens: str) -> list[str]:
